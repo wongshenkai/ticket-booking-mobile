@@ -8,9 +8,12 @@ import { Redirect } from 'expo-router';
 interface AuthContextProps {
   isLoggedIn: boolean;
   isLoadingAuth: boolean;
-  authenticate : VoidFunction;
+  authenticate: VoidFunction;
+  // authenticate: (authCode: string) => void; 
   logout: VoidFunction;
   user: User | null;
+  // authCode: string;
+  // getJWT: (code: string) => Promise<void>;
 }
 
 const AuthContext = React.createContext({} as AuthContextProps);
@@ -23,6 +26,7 @@ export function AuthenticationProvider({ children }: React.PropsWithChildren) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoadingAuth, setIsLoadingAuth] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [authCode, setAuthCode] = useState<string>("");
 
   useEffect(() => {
     async function checkIfLoggedIn() {
@@ -47,6 +51,7 @@ export function AuthenticationProvider({ children }: React.PropsWithChildren) {
 
 
   function authenticate() {
+    // function authenticate(authCode: string) {
     // try {
     //   setIsLoadingAuth(true);
 
@@ -54,7 +59,7 @@ export function AuthenticationProvider({ children }: React.PropsWithChildren) {
 
     //   if (response) {
     //     setIsLoggedIn(true);
-    //     await AsyncStorage.setItem('token', response.data.token);
+        // await AsyncStorage.setItem('token', response.data.token);
     //     await AsyncStorage.setItem('user', JSON.stringify(response.data.user));
     //     setUser(response.data.user);
     //     router.replace('(authed)');
@@ -66,6 +71,7 @@ export function AuthenticationProvider({ children }: React.PropsWithChildren) {
     // }
     // console.log(isLoadingAuth+' 01');
     setIsLoadingAuth(true);
+    // getJWT(authCode);
     // console.log(isLoadingAuth+' 02');
     setIsLoggedIn(true);
     router.replace('(authed)');
